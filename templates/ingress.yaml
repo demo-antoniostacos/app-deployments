@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.tacoWebpage.applicationConfig.ingress.ingressName }}
+spec:
+  ingressClassName: {{ .Values.tacoWebpage.applicationConfig.ingress.ingressClassName }}
+  # hosts:
+  #   - host: test-app.gcp.glueops.rocks
+  rules:
+  - host: {{ .Values.tacoWebpage.applicationConfig.ingress.host }}
+    http:
+      paths:
+        - backend:
+            service:
+              name: {{ .Values.tacoWebpage.serviceConfig.serviceName }}
+              port:
+                number: {{ .Values.tacoWebpage.applicationConfig.containerPort }}
+          path: /
+          pathType: Prefix
+  tls:
+    - secretName: {{ .Values.tacoWebpage.serviceConfig.tls.secretName }}
+      hosts:
+        - {{ .Values.tacoWebpage.applicationConfig.ingress.host }}

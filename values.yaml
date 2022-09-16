@@ -1,0 +1,20 @@
+# Default values for test-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+tacoWebpage:
+  replicaCount: 1
+
+  applicationConfig:
+    appName: test-app
+    image: antoniostacos/taco-webpage:0.2.0
+    containerPort: 8080
+    ingress:
+      ingressName: test-app-ingress
+      ingressClassName: external-ingress-nginx
+      host: test-app.gcp.glueops.rocks
+
+  serviceConfig:
+    serviceName: test-app-service
+    tls:
+      secretName: test-app-tls

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tacoWebpage.applicationConfig.appName }}
+  labels:
+    app: {{ .Values.tacoWebpage.applicationConfig.appName }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.tacoWebpage.applicationConfig.appName }}
+  replicas: {{ .Values.tacoWebpage.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tacoWebpage.applicationConfig.appName }}
+    spec:
+      serviceAccountName: {{ .Values.tacoWebpage.applicationConfig.appName }}
+      containers:
+      - name: app
+        image: {{ .Values.tacoWebpage.applicationConfig.image }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.tacoWebpage.applicationConfig.containerPort }}
